@@ -245,3 +245,79 @@ INSERT INTO pret VALUES
 -- - Disques achetés en 1998 : codeOuv 100
 -- - Franck a emprunté titres
 -- - Livres avec un exemplaire emprunté et un disponible : 200, 201
+
+
+
+
+
+
+-- -----------------------------
+-- Livres supplémentaires pour collection NULL
+-- -----------------------------
+INSERT INTO livre (codeOuv, titre, editeur, collection) 
+VALUES (300, 'Livre Mystère', 'Gava-editor', NULL);
+
+INSERT INTO auteur (codeOuv, identite)
+VALUES (300, 'Auteur Mystère');
+
+INSERT INTO exempl_liv (codeOuv, numEx, dateachat, etat)
+VALUES (300, 1, '2022-07-01', 'disponible');
+
+-- -----------------------------
+-- Abonnés pour requêtes 10 et 13
+-- -----------------------------
+-- Abonné "Toto" en Isère
+INSERT INTO abonne (numabo, nom, rue, ville, codep, tel)
+VALUES (10, 'Toto Dupont', '12 rue Exemple', 'Isère', '38000', '0612345678');
+
+-- Abonné "Franck"
+INSERT INTO abonne (numabo, nom, rue, ville, codep, tel)
+VALUES (11, 'Franck', '1 rue Centrale', 'Paris', '75001', '0600000000');
+
+-- -----------------------------
+-- Prêts pour Franck et Toto
+-- -----------------------------
+-- Franck emprunte un disque
+INSERT INTO pret (codeOuv, numEx, diskoulivr, numabo, datepret)
+VALUES (100, 2, 'DISK', 11, '2023-01-10');
+
+-- Franck emprunte un livre
+INSERT INTO pret (codeOuv, numEx, diskoulivr, numabo, datepret)
+VALUES (200, 1, 'LIVRE', 11, '2023-01-10');
+
+-- Toto emprunte un disque le 12/01/2006
+INSERT INTO pret (codeOuv, numEx, diskoulivr, numabo, datepret)
+VALUES (100, 1, 'D', 10, '2006-01-12');
+
+-- -----------------------------
+-- Vérification : requêtes qui devraient maintenant renvoyer des résultats
+-- -----------------------------
+-- 9-) Éditeurs avec collection non renseignée
+SELECT DISTINCT editeur
+FROM livre
+WHERE collection IS NULL;
+
+-- 10-) Abonnés contenant "toto" et habitant en Isère
+SELECT *
+FROM abonne
+WHERE nom LIKE '%toto%' AND ville = 'Isère';
+
+-- 13-) Abonnés ayant emprunté un disque le 12/01/2006
+SELECT DISTINCT a.nom
+FROM abonne a
+JOIN pret p ON a.numabo = p.numabo
+WHERE p.diskoulivr = 'D'
+AND p.datepret = '2006-01-12';
+
+-- 14-) Titres empruntés par Franck
+SELECT titre
+FROM disque d
+JOIN pret p ON d.codeOuv = p.codeOuv
+JOIN abonne a ON p.numabo = a.numabo
+WHERE a.nom = 'Franck'
+UNION
+SELECT titre
+FROM livre l
+JOIN pret p ON l.codeOuv = p.codeOuv
+JOIN abonne a ON p.numabo = a.numabo
+WHERE a.nom = 'Franck';
