@@ -131,3 +131,29 @@ INSERT INTO exempl_liv VALUES
 (14, 1, '2018-02-22', 'Bon'),
 (15, 1, '2020-10-14', 'Bon'),
 (15, 2, '2023-01-07', 'Neuf');
+
+
+
+
+
+
+-- Ajout de 2 romans édités par Gava-editor
+INSERT INTO livre VALUES
+(16, 'Le Silence des Ombres', 'Gava-editor', 'Roman'),
+(17, 'Les Voix du Passé', 'Gava-editor', 'Roman');
+
+-- Ajout des auteurs
+INSERT INTO auteur VALUES
+(16, 'Jean Morel'),
+(17, 'Claire Dubois');
+
+-- Ajout des exemplaires des livres
+INSERT INTO exempl_liv VALUES
+(16, 1, '2022-04-10', 'Neuf'),
+(17, 1, '2023-01-15', 'Très bon');
+
+-- Requête : Titres des romans édités par Gava-editor
+SELECT titre
+FROM livre
+WHERE collection = 'Roman'
+  AND editeur = 'Gava-editor';
