@@ -37,3 +37,12 @@ INSERT INTO Emp VALUES
 (3, 'Durand', 'Développeur', 2, '2019-06-01', 3200, NULL, 20),
 (4, 'Bernard', 'Vendeur', 1, '2020-09-20', 2800, 500, 30),
 (5, 'Petit', 'Vendeur', 4, '2021-02-11', 2600, 300, 30);
+
+-- Ajouter un département à Créteil
+INSERT INTO Dept VALUES
+(40, 'Ressources Humaines', 'Créteil');
+
+-- Ajouter 2 employés travaillant à Créteil
+INSERT INTO Emp VALUES
+(6, 'Leroy', 'Assistant RH', 1, '2022-05-10', 2500, NULL, 40),
+(7, 'Moreau', 'Responsable RH', 1, '2021-11-03', 4200, NULL, 40);
