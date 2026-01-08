@@ -20,7 +20,7 @@ CREATE TABLE vente (
     FOREIGN KEY (numvoit) REFERENCES voiture(numvoit),
     FOREIGN KEY (numpers) REFERENCES personne(numpers)
 );
-[12:19, 08/01/2026] +22892106762: INSERT INTO voiture (numvoit, marque) VALUES
+INSERT INTO voiture (numvoit, marque) VALUES
 (1, 'Toyota'),
 (2, 'Peugeot'), 
 (3, 'Renault'),
