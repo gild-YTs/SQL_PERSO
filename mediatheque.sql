@@ -157,3 +157,91 @@ SELECT titre
 FROM livre
 WHERE collection = 'Roman'
   AND editeur = 'Gava-editor';
+
+
+
+-- -----------------------------
+-- Disques
+-- -----------------------------
+INSERT INTO disque VALUES
+(100, 'Best Of', 'Pop', 'USA', 1998, 'Sony'),
+(101, 'Classique', 'Classical', 'France', 2000, 'Gava-editor'),
+(102, 'Thriller', 'Pop', 'USA', 1982, 'Quincy Jones'),
+(103, '1984', 'Rock', 'UK', 1980, 'Robert Lange'); -- titre commun avec livre
+
+-- Exemplaires disques
+INSERT INTO exempl_disk VALUES
+(100, 1, '1998-05-10', 'disponible'),
+(100, 2, '1998-07-15', 'emprunté'),
+(101, 1, '2001-03-12', 'disponible'),
+(102, 1, '1983-01-01', 'emprunté'),
+(103, 1, '1980-06-01', 'disponible');
+
+-- -----------------------------
+-- Livres
+-- -----------------------------
+INSERT INTO livre VALUES
+(200, '1984', 'Secker & Warburg', 'Roman'),  -- titre commun avec disque
+(201, 'Best Of', 'Gava-editor', 'Roman'),    -- titre commun avec disque
+(202, 'Le Petit Prince', 'Gallimard', 'Jeunesse'),
+(203, 'Candide', 'Garnier', 'Philosophie');
+
+-- Exemplaires livres
+INSERT INTO exempl_liv VALUES
+(200, 1, '2000-01-01', 'emprunté'),
+(200, 2, '2001-05-05', 'disponible'),
+(201, 1, '2002-03-10', 'emprunté'),
+(201, 2, '2003-06-20', 'disponible'),
+(202, 1, '2021-01-15', 'disponible'),
+(203, 1, '2018-02-22', 'disponible');
+
+-- -----------------------------
+-- Auteurs
+-- -----------------------------
+INSERT INTO auteur VALUES
+(100, 'Jean Morel'), -- a fait un disque
+(200, 'Jean Morel'), -- a écrit un livre
+(101, 'Claire Dubois'),
+(201, 'Claire Dubois');
+
+-- -----------------------------
+-- Personnel
+-- -----------------------------
+CREATE TABLE personnel (
+    nom VARCHAR(50),
+    salaire DECIMAL(10,2)
+);
+
+INSERT INTO personnel VALUES
+('Alice', 25000),
+('Bob', 30000),
+('Charlie', 15000);
+
+-- -----------------------------
+-- Abonnés
+-- -----------------------------
+INSERT INTO abonne VALUES
+(1, 'Franck', '12 rue A', 'Paris', '75000', '0612345678'),
+(2, 'Toto Dupont', '15 rue B', 'Isère', '38000', '0698765432'),
+(3, 'Sara', '8 avenue Victor Hugo', 'Lyon', '69006', '0623456789');
+
+-- -----------------------------
+-- Prêts
+-- -----------------------------
+INSERT INTO pret VALUES
+(100, 2, 'DISK', 1, '2006-01-12'), -- Franck a emprunté un disque
+(200, 1, 'LIVRE', 1, '2006-01-12'), -- Franck a emprunté un livre
+(101, 1, 'DISK', 2, '2005-03-10'),
+(201, 1, 'LIVRE', 2, '2005-03-10');
+
+-- -----------------------------
+-- Notes pour requêtes
+-- -----------------------------
+-- - Titres communs disque/livre : 'Best Of', '1984'
+-- - Auteurs ayant fait disque et livre : Jean Morel, Claire Dubois
+-- - Styles disques différents : Pop, Classical, Rock
+-- - Salaires > 20000 : Alice, Bob
+-- - Abonnés avec 'toto' et ville Isère : Toto Dupont
+-- - Disques achetés en 1998 : codeOuv 100
+-- - Franck a emprunté titres
+-- - Livres avec un exemplaire emprunté et un disponible : 200, 201
