@@ -1,4 +1,4 @@
-sCREATE DATABASE gestion
+CREATE DATABASE gestion
     DEFAULT CHARACTER SET = 'utf8mb4';
 USE gestion;
 
