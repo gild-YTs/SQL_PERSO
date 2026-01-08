@@ -105,3 +105,29 @@ INSERT INTO abonne VALUES
 INSERT INTO pret VALUES
 (1, 1, 'DISK', 1, '2023-03-10'),
 (10, 2, 'LIVRE', 2, '2023-04-05');
+
+
+
+-- Ajout de nouveaux livres
+INSERT INTO livre VALUES
+(12, 'Les Misérables', 'A. Lacroix', 'Classique'),
+(13, 'L’Étranger', 'Gallimard', 'Roman'),
+(14, 'Candide', 'Garnier', 'Philosophie'),
+(15, 'La Peste', 'Gallimard', 'Roman');
+
+-- Ajout des auteurs correspondants
+INSERT INTO auteur VALUES
+(12, 'Victor Hugo'),
+(13, 'Albert Camus'),
+(14, 'Voltaire'),
+(15, 'Albert Camus');
+
+-- Ajout des exemplaires de livres
+INSERT INTO exempl_liv VALUES
+(12, 1, '2019-03-12', 'Bon'),
+(12, 2, '2020-06-18', 'Moyen'),
+(13, 1, '2021-09-05', 'Très bon'),
+(13, 2, '2022-11-10', 'Neuf'),
+(14, 1, '2018-02-22', 'Bon'),
+(15, 1, '2020-10-14', 'Bon'),
+(15, 2, '2023-01-07', 'Neuf');
