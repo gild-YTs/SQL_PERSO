@@ -1,0 +1,137 @@
+Exercice 5
+Nom des personnes et marque des voitures achetées
+SELECT p.nom, v.marque
+FROM personne p
+JOIN vente ve ON p.numpers = ve.numpers
+JOIN voiture v ON ve.numvoit = v.numvoit;
+Voitures non vendues
+SELECT v.*
+FROM voiture v
+LEFT JOIN vente ve ON v.numvoit = ve.numvoit
+WHERE ve.numvoit IS NULL;
+Villes des personnes n’ayant acheté aucune voiture
+SELECT DISTINCT p.ville
+FROM personne p
+LEFT JOIN vente ve ON p.numpers = ve.numpers
+WHERE ve.numpers IS NULL;
+Exercice 6
+Moyenne des prix par marque (> 40000)
+SELECT v.marque, AVG(ve.prix) AS prix_moyen
+FROM vente ve
+JOIN voiture v ON ve.numvoit = v.numvoit
+GROUP BY v.marque
+HAVING AVG(ve.prix) > 40000;
+ Prix supérieurs à la moyenne générale
+SELECT prix
+FROM vente
+WHERE prix > (SELECT AVG(prix) FROM vente);
+Exercice 7 ----3eme forme normale
+Relations en 3FN
+ETUDIANT(nummat, nom, prenom, codfiliere)
+FILIERE(codfiliere, libfiliere, effectif)
+MATIERE(codmat, libmat)
+ENSEIGNER(codmat, codfiliere, numprof)
+PROFESSEUR(numprof, nom, prenom, adresse)
+AVOIR_NOTE(nummat, codmat, date, note)
+COEFFICIENT(codmat, codfiliere, coefficient)
+Exercice 8
+
+1️-)Employés avec commission (ordre décroissant)
+SELECT *
+FROM Emp
+WHERE comm IS NOT NULL
+ORDER BY comm DESC;
+2️-)Embauchés depuis le 01/09/2006
+SELECT nomE
+FROM Emp
+WHERE embauche >= '2006-09-01';
+3️-) Employés travaillant à Créteil
+SELECT e.*
+FROM Emp e
+JOIN Dept d ON e.numD = d.numD
+WHERE d.lieu = 'Créteil';
+4️-) Moyenne des salaires
+SELECT AVG(salaire) AS salaire_moyen
+FROM Emp;
+5️-)Nombre de commissions non NULL
+SELECT COUNT(comm)
+FROM Emp;
+6️-)Salaires > moyenne de l’entreprise
+SELECT *
+FROM Emp
+WHERE salaire > (SELECT AVG(salaire) FROM Emp);
+
+Exo 9
+1️-) Contenu de la relation livre
+SELECT * FROM livre;
+2️-) Titres des romans édités par Gava-editor
+SELECT titre
+FROM livre
+WHERE editeur = 'Gava-editor';
+3️-) Titres communs aux disques et livres
+SELECT titre FROM disque
+INTERSECT
+SELECT titre FROM livre;
+4️-) Auteurs ayant fait des disques et écrit des livres
+SELECT identite
+FROM auteur
+GROUP BY identite
+HAVING COUNT(DISTINCT codeOuv) > 1;
+5️-)Styles de disques différents
+SELECT DISTINCT style
+FROM disque;
+6️-) Salaire annuel (> 20000), ordre décroissant
+SELECT nom, salaire * 12 AS salaire_annuel
+FROM personnel
+WHERE salaire > 20000
+ORDER BY salaire DESC;
+7️-)Nombre de prêts par famille
+SELECT nom, tel, COUNT(*) AS nb_prets
+FROM abonne a
+JOIN pret p ON a.numabo = p.numabo
+GROUP BY nom, tel;
+8️-) Code du disque avec le plus d’exemplaires
+SELECT codeOuv
+FROM exempl_disk
+GROUP BY codeOuv
+ORDER BY COUNT(*) DESC
+FETCH FIRST 1 ROW ONLY;
+9️-) Éditeurs avec collection non renseignée
+SELECT DISTINCT editeur
+FROM livre
+WHERE collection IS NULL;
+10-) Abonnés contenant "toto" et habitant en Isère
+SELECT *
+FROM abonne
+WHERE nom LIKE '%toto%' AND ville = 'Isère';
+1️1-) Nombre de genres de livres
+SELECT COUNT(DISTINCT collection)
+FROM livre;
+12-) Disques achetés en 1998
+SELECT COUNT(*)
+FROM exempl_disk
+WHERE EXTRACT(YEAR FROM dateachat) = 1998;
+13-)Abonnés ayant emprunté un disque le 12/01/2006
+SELECT DISTINCT a.nom
+FROM abonne a
+JOIN pret p ON a.numabo = p.numabo
+WHERE p.diskoulivr = 'D'
+AND p.datepret = '2006-01-12';
+1️4️-) Titres empruntés par Franck
+SELECT titre
+FROM disque d
+JOIN pret p ON d.codeOuv = p.codeOuv
+JOIN abonne a ON p.numabo = a.numabo
+WHERE a.nom = 'Franck'
+UNION
+SELECT titre
+FROM livre l
+JOIN pret p ON l.codeOuv = p.codeOuv
+JOIN abonne a ON p.numabo = a.numabo
+WHERE a.nom = 'Franck';
+1️5️-) Livres avec au moins un exemplaire emprunté et un disponible
+SELECT codeOuv
+FROM exempl_liv
+GROUP BY codeOuv
+HAVING SUM(CASE WHEN etat = 'emprunté' THEN 1 ELSE 0 END) > 0
+   AND SUM(CASE WHEN etat = 'disponible' THEN 1 ELSE 0 END) > 0;
