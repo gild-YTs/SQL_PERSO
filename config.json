@@ -1,0 +1,12 @@
+{ // Rust analyzer : analyser le projet comme Cargo le voit
+    "rust-analyzer.cargo.allFeatures": true,
+    // Affichage des types inférés (très utile en Rust)
+    "rust-analyzer.inlayHints.enable": true,
+    // Utiliser Clippy au lieu des simples warnings
+    "rust-analyzer.check.command": "clippy",
+    // Formatage automatique à la sauvegarde
+    "editor.formatOnSave": true,
+    "[rust]": {
+        "editor.defaultFormatter": "rust-lang.rust-analyzer"
+    }
+}
